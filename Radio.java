@@ -4,7 +4,7 @@ public class Radio implements IRadio {
     public String frequence;
     private Double[] FMStations = new Double[12];
     private int[] AMStations = new int[12];
-    public int AM_actualStation;
+    private int AM_actualStation;
     private double FM_actualStation;
 
     @Override
