@@ -40,14 +40,20 @@ public class UI {
                 case 2:
                     System.out.println("¿Qué frecuencia desea escuchar? Escriba AM o FM");
                     freq = sc.next(); 
-                    
                     radio.setFrequence(freq);
-
                     System.out.println("\tLa emisora se encuentra en: " + radio.getFrequence());
                     break; 
-
+                //Si la persona quiere ir adelante o atras en las emisoras
                 case 3: 
-
+                    System.out.println("Para donde deseas ir? Adelante (1), Atras(2)");
+                    int opcion = sc.nextInt();
+                    if (opcion== 1){
+                        radio.Forward();
+                    }   
+                    else if (opcion==2){
+                        radio.Backward();
+                    }           
+                    
                     break;  
 
                 case 4: 
