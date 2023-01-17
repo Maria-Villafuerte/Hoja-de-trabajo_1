@@ -1,242 +1,135 @@
-import java.lang.Package;
-/**
- * @author MrAndrewlol
- *
- */
 public class Radio implements IRadio {
 
+    private boolean turnOn;
+    public String Frequence;
+    private Double[] FMStations = new Double[12];
+    private Integer[] AMStations = new Integer[12];
+    private int AM_actualStation;
+    private double FM_actualStation;
 
-	boolean encendidoapagado;
-	String Frequence;
-	double FMActualStation;
-	int AMActualStation;
-	int[] listasaveAM = new int[12];
-	double[] listasaveFM = new double[12];
-	
+    @Override
+    public void on() {
+        turnOn = true;
+        setAMActualStation(530);
+        setFMActualStation(87.9);
+    }
 
+    @Override
+    public void off() {
+        turnOn = false;
+    }
 
-	public Radio(){
-		encendidoapagado = false;
-		Frequence = "";
-		FMActualStation = 87.9;
-		AMActualStation = 530;
-		listasaveAM[0] = 1;
-		listasaveFM[0] = 1;
-	}
+    @Override
+    public boolean isOn() {
+        return turnOn;
+    }
 
+    @Override
+    public void setFrequence(String freq) throws Exception {
 
-	public Radio(String Frequence, boolean encendidoapagado, double FMActualStation, int AMActualStation, int[] listasaveAM, double[] listasaveFM){
-		this.encendidoapagado = encendidoapagado;
-		this.Frequence = Frequence;
-		this.FMActualStation = FMActualStation;
-		this.AMActualStation = AMActualStation;
-		this.listasaveAM = listasaveAM;
-		this.listasaveFM = listasaveFM;
+        if (freq.equalsIgnoreCase("AM") || freq.equalsIgnoreCase("FM")) {
+            Frequence = freq;
 
+        } else {
+            throw new Exception("¡Por favor solamente seleccione entre AM o FM!");
+        }
 
-	}
+    }
 
+    @Override
+    public String getFrequence() {
+        return Frequence;
+    }
 
-	public boolean isEncendidoapagado() {
-		return this.encendidoapagado;
-	}
+    // AM frequencies can be represented by multiples of 10 in the range 530 to
+    // 1610.
+    // FM frequencies are found at multiples of 0.2 in the range 87.9 to 107.9.”
 
-	public boolean getEncendidoapagado() {
-		return this.encendidoapagado;
-	}
+    @Override
+    public void Forward() {
+        if (Frequence.equals("AM")) {
+            setAMActualStation(AM_actualStation + 10);
+            if (AM_actualStation > 1610) {
+                setAMActualStation(530);
+            }
+        }
+        if (Frequence.equals("FM")) {
+            setFMActualStation(FM_actualStation + 0.2);
+            if (FM_actualStation > 107.9) {
+                setFMActualStation(87.9);
+            }
+        }
 
-	public void setEncendidoapagado(boolean encendidoapagado) {
-		this.encendidoapagado = encendidoapagado;
-	}
+    }
 
-	public String getFrequence() {
-		return this.Frequence;
-	}
+    @Override
+    public void Backward() {
+        if (Frequence.equals("AM")) {
+            setAMActualStation(AM_actualStation - 10);
+            if (AM_actualStation < 530) {
+                setAMActualStation(1610);
+            }
+        }
+        if (Frequence.equals("FM")) {
+            setFMActualStation(FM_actualStation - 0.2);
+            if (FM_actualStation > 87.9) {
+                setFMActualStation(107.9);
+            }
+        }
 
-	public int[] getListasaveAM() {
-		return this.listasaveAM;
-	}
+    }
 
-	public void setListasaveAM(int[] listasaveAM) {
-		this.listasaveAM = listasaveAM;
-	}
+    @Override
+    public double getFMActualStation() {
+        return FM_actualStation;
+    }
 
-	public double[] getListasaveFM() {
-		return this.listasaveFM;
-	}
+    @Override
+    public int getAMActualStation() {
+        return AM_actualStation;
+    }
 
-	public void setListasaveFM(double[] listasaveFM) {
-		this.listasaveFM = listasaveFM;
-	}
+    @Override
+    public void setFMActualStation(double actualStation) {
+        FM_actualStation = actualStation;
 
-	
-	
-	
-	public void on(){
-		setEncendidoapagado(true);
-		
-	}
-	
+    }
 
-	public void off(){
-		setEncendidoapagado(false);
+    // Naho
+    @Override
+    public void setAMActualStation(int actualStation) {
+        AM_actualStation = actualStation;
 
-		
+    }
 
-	}
-	
-	/***
-	 * Este metodo nos indica si la radio esta encendida o apagada
-	 * @return true si la radio esta encendida y false cuando la radio este apagada
-	 */
-	public boolean isOn(){
+    @Override
+    public void saveFMStation(double actualStation, int slot) {
+        FMStations[slot - 1] = actualStation;
 
-		boolean estado;
+    }
 
-		estado = getEncendidoapagado();
+    @Override
+    public void saveAMStation(int actualStation, int slot) {
+        AMStations[slot - 1] = actualStation;
+    }
 
-		return estado; 
-		
-	}
-	
-	/***
-	 * Este metodo nos ayuda a establecer la frecuencia, recibe un parametro llamado freq que puede "AM" o "FM"
-	 * @param freq La frecuencia la cual puede ser AM o FM, de lo contrario error.
-	 */
-	public void setFrequence(String freq) throws Exception{
+    @Override
+    public double getFMSlot(int slot) {
+        Double fmSlot = 87.9;
+        if (FMStations[slot - 1] != null) {
+            fmSlot = FMStations[slot - 1];
+        }
 
-			switch(freq){
-				case "AM":{
-					this.Frequence = "AM";
-					setAMActualStation(530);
-					break;
-				}
-	
-				case "FM":{
-					this.Frequence = "FM";
-					setFMActualStation(87.9);
-					break;
-				}
-	
-				default:{
-					freq = getFrequence() ;
-					break;
-				}
-			}
-	}
+        return fmSlot;
+    }
 
-	
-	public void Forward(){
-		switch(getFrequence()){
-			case "AM":{
-				if (getAMActualStation() < 1610){
-					AMActualStation = getAMActualStation() + 10;
-					setAMActualStation(AMActualStation);
-				}
-				else{
-					setAMActualStation(530);
-				}
+    @Override
+    public int getAMSlot(int slot) {
+        int amSlot = 530;
+        if (AMStations[slot - 1] != null) {
+            amSlot = AMStations[slot - 1];
+        }
 
-			}
-
-
-			case "FM":{
-				if (getFMActualStation() < 107.9){
-					FMActualStation = getFMActualStation() + 0.2;
-					setFMActualStation(FMActualStation);
-				}
-				else{
-					setFMActualStation(87.9);
-				}
-
-			}
-		}
-	}
-	
-	public void Backward(){
-		switch(getFrequence()){
-			case "AM":{
-				if (getAMActualStation() > 530){
-					AMActualStation = getAMActualStation() - 10;
-					setAMActualStation(AMActualStation);
-				}
-				else{
-					setAMActualStation(1610);
-				}
-			}
-
-
-			case "FM":{
-				if (getFMActualStation() > 87.9){
-					FMActualStation = getFMActualStation() - 0.2;
-					setFMActualStation(FMActualStation);
-				}
-				else{
-					setFMActualStation(107.9);
-				}
-
-			}
-		}
-
-	}
-	
-	public double getFMActualStation(){
-		return this.FMActualStation;}
-	
-	public int getAMActualStation(){
-		return this.AMActualStation;}
-	
-	//Regresa el la estacion a FM
-	public void setFMActualStation(double actualStation){
-		this.FMActualStation = actualStation;
-
-	}
-	
-	//Regresa la estacion a AM con frecuencia
-	public void setAMActualStation(int actualStation){
-		this.AMActualStation = actualStation;
-
-	}
-
-	
-	
-	public void saveFMStation(double actualStation, int slot){
-		listasaveFM[slot] = actualStation;
-		
-		
-
-	}
-	
-	public void saveAMStation(int actualStation, int slot){
-		listasaveAM[slot] = actualStation;
-
-	}
-	
-	public double getFMSlot(int slot){
-		try {
-			if (listasaveFM[slot-1] < 87.9 || listasaveFM[slot-1] > 107.9){
-				setFMActualStation(87.9);
-			}
-			setFMActualStation(listasaveFM[slot-1]);
-			
-		} catch (Exception e) {
-			System.out.println("Espacio disponible.");
-		}
-		return listasaveFM[slot-1];
-
-	}
-	
-	public int getAMSlot(int slot){
-		try {
-			if (listasaveAM[slot-1] < 530 || listasaveAM[slot-1] > 1610){
-				setAMActualStation(530);
-			} else{
-				setAMActualStation(listasaveAM[slot-1]);
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Espacio disponible.");
-		}
-		return listasaveAM[slot-1];
-	}
+        return amSlot;
+    }
 }
