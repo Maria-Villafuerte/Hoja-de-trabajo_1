@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-    Radio1 radio = new Radio1();
+    Radio radio = new Radio();
 
     @Test
     public void PruebaSet_GetFrequence() throws Exception {
