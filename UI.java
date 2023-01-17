@@ -52,6 +52,12 @@ public class UI {
                     } else if (opcion == 2) {
                         radio.Backward();
                     }
+                    if (radio.Frequence.equals("AM")){
+                        System.out.println("Radio actual:" + radio.AMActualStation);
+                    }
+                    else if(radio.Frequence.equals("FM")){
+                        System.out.println("Radio actual:" + radio.FMActualStation);
+                    }
 
                     break;
 
