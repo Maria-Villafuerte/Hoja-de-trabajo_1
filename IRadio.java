@@ -1,5 +1,8 @@
 /**
  * @author moises.alonso
+ * @category Ejercicio #1 
+ * Interfaz para ejercicio de Radio 
+ * @date 17/01/2023
  */
 public interface IRadio {
 	
