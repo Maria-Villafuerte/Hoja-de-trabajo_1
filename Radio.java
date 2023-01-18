@@ -1,3 +1,12 @@
+/**
+ * @author 
+ * Maria José Villafuerte 
+ * Fabiola Contreras
+ * Madeline Castro 
+ * @category Ejercicio #1 
+ * Propósito: Metodos para clase Radio 
+ * @date 17/01/2023
+ */
 public class Radio implements IRadio {
 
  
