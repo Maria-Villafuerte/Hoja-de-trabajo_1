@@ -1,3 +1,13 @@
+/**
+ * @author 
+ * Maria José Villafuerte 
+ * Fabiola Contreras
+ * Madeline Castro 
+ * @category Ejercicio #1 
+ * Propósito: Main del programa y menús
+ * @date 17/01/2023
+ */
+
 import java.util.Scanner;
 
 public class UI {
