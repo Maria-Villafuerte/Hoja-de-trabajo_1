@@ -1,3 +1,13 @@
+/**
+ * @author 
+ * Maria José Villafuerte 
+ * Fabiola Contreras
+ * Madeline Castro 
+ * @category Ejercicio #1 
+ * Propósito: Tests para métodos de clase Radio 
+ * @date 17/01/2023
+ */
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
