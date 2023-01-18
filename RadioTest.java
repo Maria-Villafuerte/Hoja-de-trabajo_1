@@ -28,13 +28,15 @@ class RadioTest {
     /**
      * Test en base a obtener la frecuencia de radio obtenida al retroceder en modo FM
      * @throws Exception Mensaje de error al no seleccionar AM o FM
+     *
+     * Está destinado a fallar puesto que 87.9 es la primera estación "en lista" y de esa etapa debe regresar a 107.9
      */
     @Test
     public void PruebaBackward() throws Exception {
         radio.setFrequence("FM");
         radio.setFMActualStation(87.9);
         radio.Backward();
-        assertEquals(107.9, radio.getFMActualStation());
+        assertEquals(87.7, radio.getFMActualStation());
     }
 
     /**
